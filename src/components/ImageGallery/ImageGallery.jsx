@@ -1,4 +1,4 @@
-import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -16,7 +16,6 @@ const List = styled.ul`
 `;
 
 export const ImageGallery = ({ items }) => {
-  console.log(items);
   return (
     <List>
       {items.map(({ id, tags, webformatURL, largeImageURL }) => {

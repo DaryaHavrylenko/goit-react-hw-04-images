@@ -1,7 +1,16 @@
 import PropTypes from 'prop-types';
-import { Message, Query } from './Notification.styled';
+import styled from 'styled-components';
 
-export const Idle = () => <Message>Enter data to request... </Message>;
+const Message = styled.p`
+  margin: 20px auto;
+  font-size: 24px;
+`;
+const Query = styled.i`
+  color: red;
+  font-size: 26px;
+`;
+
+export const Idle = () => <Message>Please, enter your request.</Message>;
 
 export const Rejected = ({ error }) => {
   <Message>
@@ -12,7 +21,7 @@ export const Rejected = ({ error }) => {
 
 export const ResolvedNoData = ({ query }) => (
   <Message>
-    Sorry, no data was found for your request git"<Query>{query}</Query>"
+    Sorry, nothing found for your request "<Query>{query}</Query>"
   </Message>
 );
 

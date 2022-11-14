@@ -25,7 +25,7 @@ export default function App() {
     setStatus('pending');
   };
   const handleLoadMore = () => {
-    setPage(prevState => prevState.page + 1);
+    setPage(prevState => prevState + 1);
   };
 
   useEffect(() => {

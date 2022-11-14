@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -21,27 +21,36 @@ const ModalImg = styled.div`
 `;
 
 const modalRoot = document.querySelector('#modal-root');
-export class Modal extends Component {
-  closeByEscape = e => {
-    if (e.code !== 'Escape') {
-      return;
-    }
-    this.props.closeModal();
-  };
-  componentDidMount() {
-    window.addEventListener('keydown', this.closeByEscape);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.closeByEscape);
-  }
-  render() {
-    return createPortal(
-      <ModalOverlay onClick={this.props.closeModal}>
-        <ModalImg>
-          <img src={this.props.modalImg} alt={this.props.alt} />
-        </ModalImg>
-      </ModalOverlay>,
-      modalRoot
-    );
-  }
+export default function Modal({ closeModal, alt, modalImg }) {
+  const closeByEscape = useCallback(
+    e => {
+      if (e.code !== 'Escape') {
+        return;
+      }
+      closeModal();
+    },
+    [closeModal]
+  );
+  useEffect(() => {
+    window.addEventListener('keydown', closeByEscape);
+  }, [closeByEscape]);
+  useEffect(() => {
+    window.removeEventListener('keydown', closeByEscape);
+  }, [closeByEscape]);
+
+  // componentDidMount() {
+  //   window.addEventListener('keydown', this.closeByEscape);
+  // }
+  // componentWillUnmount() {
+  //   window.removeEventListener('keydown', this.closeByEscape);
+  // }
+
+  return createPortal(
+    <ModalOverlay onClick={closeModal}>
+      <ModalImg>
+        <img src={modalImg} alt={alt} />
+      </ModalImg>
+    </ModalOverlay>,
+    modalRoot
+  );
 }
