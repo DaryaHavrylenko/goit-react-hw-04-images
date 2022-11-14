@@ -16,6 +16,7 @@ const List = styled.ul`
 `;
 
 export const ImageGallery = ({ items }) => {
+  console.log(items);
   return (
     <List>
       {items.map(({ id, tags, webformatURL, largeImageURL }) => {
