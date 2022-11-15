@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
@@ -22,28 +22,13 @@ const ModalImg = styled.div`
 
 const modalRoot = document.querySelector('#modal-root');
 export default function Modal({ closeModal, alt, modalImg }) {
-  const closeByEscape = useCallback(
-    e => {
-      if (e.code !== 'Escape') {
-        return;
-      }
-      closeModal();
-    },
-    [closeModal]
-  );
   useEffect(() => {
+    const closeByEscape = e => e.code === 'Escape' && closeModal();
     window.addEventListener('keydown', closeByEscape);
-  }, [closeByEscape]);
-  useEffect(() => {
-    window.removeEventListener('keydown', closeByEscape);
-  }, [closeByEscape]);
-
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.closeByEscape);
-  // }
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.closeByEscape);
-  // }
+    return () => {
+      window.removeEventListener('keydown', closeByEscape);
+    };
+  }, [closeModal]);
 
   return createPortal(
     <ModalOverlay onClick={closeModal}>
